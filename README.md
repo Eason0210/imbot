@@ -44,12 +44,11 @@ its all in English.
 
 ;; For Mac OS with Rime
 (when (eq system-type 'darwin)
-  (defun imbot--activate-im ()
+  (defun imbot--activate ()
     (call-process imbot-command nil nil nil "im.rime.inputmethod.Squirrel.Rime"))
-  (defun imbot--deactivate-im ()
+  (defun imbot--deactivate ()
     (call-process imbot-command nil nil nil "com.apple.keylayout.ABC")))
 
 (imbot-mode)
 
 ```
-

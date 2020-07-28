@@ -30,6 +30,12 @@
 (require 'subr-x)
 
 (defvar imbot-command "im-select")
+(defvar imbot-arg-cn "2052")
+(defvar imbot-arg-en "1033")
+
+(if (eq system-type 'darwin)
+  (defvar imbot--char-to-compare ?i)
+  (defvar imbot--char-to-compare ?2))
 
 (defvar imbot--active nil "buffer local input method state")
 
@@ -42,13 +48,13 @@
              (call-process imbot-command nil t)
              (buffer-string)))))
     (char-equal
-     (aref output 0) ?2)))
+     (aref output 0) imbot--char-to-compare)))
 
 (defun imbot--activate ()
-  (call-process imbot-command nil nil nil "2052"))
+  (call-process imbot-command nil nil nil imbot-arg-cn))
 
 (defun imbot--deactivate ()
-  (call-process imbot-command nil nil nil "1033"))
+  (call-process imbot-command nil nil nil imbot-arg-en))
 
 (defun imbot--save ()
   (unless (minibufferp)
@@ -78,7 +84,7 @@
 
 ;; CAUTION: disable imbot-mode before looking up key definition start with imbot--prefix-override-keys
 (defvar imbot--prefix-override-keys
-  '("C-c" "C-x" "C-h" "C-z" "C-." "s-." "s-,"))
+  '("C-c" "C-x" "C-h" "C-z" "C-." "s-." "s-," "s-j"))
 
 (defvar imbot--prefix-override-map-alist nil)
 
@@ -125,7 +131,7 @@
 
 (defvar imbot--check-for-new-buffer nil)
 
-(defvar imbot--inline-edit-enable t)
+(defvar imbot--inline-edit-enable nil)
 
 (defvar imbot--overlay nil)
 

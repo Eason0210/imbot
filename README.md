@@ -43,11 +43,16 @@ its all in English.
 (require 'imbot)
 
 ;; For Mac OS with Rime
+
 (when (eq system-type 'darwin)
-  (defun imbot--activate ()
-    (call-process imbot-command nil nil nil "im.rime.inputmethod.Squirrel.Rime"))
-  (defun imbot--deactivate ()
-    (call-process imbot-command nil nil nil "com.apple.keylayout.ABC")))
+  (setq imbot-command "macism")
+  (setq imbot-arg-cn "im.rime.inputmethod.Squirrel.Rime")
+  (setq imbot-arg-en "com.apple.keylayout.ABC"))
+
+(when (eq system-type 'gnu/linux)
+  (setq imbot-command "fcitx-remote")
+  (setq imbot-arg-cn "-o")
+  (setq imbot-arg-en "-c"))
 
 (imbot-mode)
 
